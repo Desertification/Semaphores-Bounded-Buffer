@@ -1,0 +1,26 @@
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * Created by thoma on 12-Apr-17.
+ */
+public class Producer implements Runnable{
+    private Buffer<Date> buffer;
+
+    public Producer(Buffer<Date> buffer) {
+        this.buffer = buffer;
+    }
+
+    @Override
+    public void run() {
+        while (true){
+            SleepUtilities.nap();
+            Date date = new Date();
+            buffer.insert(date);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            System.out.println(MessageFormat.format("Producer produced: {0}", dateFormat.format(date)));
+        }
+    }
+}
